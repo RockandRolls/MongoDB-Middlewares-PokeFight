@@ -1,59 +1,61 @@
-// const dbPool = require("../db/pgClient");
+// const dbPool = require("../db/pgClient"); if we r connected to a database
+let jsonData = require('../data.json');
+/**
+ * Controller to serve all ducks in the database.
+ * @route `/pokemon`
+ * @param {*} req - Express request object
+ * @param {*} res - Express response object
+ * @response Array of pokemons
+ */
 
-// /**
-//  * Controller to serve all ducks in the database.
-//  * @route `/pokemon`
-//  * @param {*} req - Express request object
-//  * @param {*} res - Express response object
-//  * @response Array of pokemons
-//  */
+const getAllPokemons = (req, res) => { res.json(jsonData)};
 
-// const getAllCards = async (req, res) => {
-//   try {
-//     const { rows } = await dbPool.query(
-//       `SELECT card_id, name, type, base FROM array;`
-//     );
-
-//     return res.json(rows);
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({ error: error.message });
-//   }
-// };
+/**
+ * Controller to serve a single pokemon card based on card id.
+ * @route /pokemon/:id
+ * @param {*} req - Express request object
+ * @param {*} res - Express response object
+ * @response Single pokemon object 
+ */
 
 
-// /**
-//  * Controller to serve a single pokemon card based on card id.
-//  * @route /pokemon/:id
-//  * @param {*} req - Express request object
-//  * @param {*} res - Express response object
-//  * @response Single pokemon object 
-//  */
+ //   req=request 
+const getSinglePokemon = (req, res) => { 
+    try {
+      const { pokeName } = req.params; 
+//    single object in array=pokemon= alll details-name, type, base
+      const findPokemon = jsonData.find((pokemon) =>pokeName.toLowerCase()=== pokemon.name.english.toLowerCase());      
+//   pokeName is in URL= charmander 
+// whatever user types, just make it lowercase //   
+      if (!findPokemon) throw new Error('Pokemon not found.');
+  
+      return res.json(findPokemon);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  };
 
-// const getSingleCard = async (req, res) => {
-//   try {
-//     const { id } = req.params;
+const getPokeInfo= (req, res) => { 
+    try {
+      const { pokeName, info } = req.params;  
+      const findPokemon = jsonData.find((pokemon) =>pokeName.toLowerCase()=== pokemon.name.english.toLowerCase());      
+      
+      if (!findPokemon) throw new Error('Pokemon not found.');    
+    
+    if(findPokemon.hasOwnProperty(info)){
+        return res.json(findPokemon[info])      
+    }else {
+        return res.status(404).json({ error: 'Info not found' }); 
+       }  
+      
+    //   info= type or base.. info is accessed via bracket notation, placeholder for all keys not a specific key
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  };
 
-//     if (!+id) return res.status(400).json({ error: "Id must be a number" });
-
-//     const {
-//       rows: [oneCard],
-//     } = await dbPool.query(
-//       `SELECT id, name, type, base FROM array WHERE card_id=$1`,
-//       [id]
-//     );
-
-//     if (!oneCard)
-//       return res.status(404).json({ error: "Pokemon could not be found" });
-
-//     res.json(oneCard);
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({ error: error.message });
-//   }
-// };
-
-// module.exports = {
-//   getAllCards,
-//   getSingleCard,
-// };
+module.exports = {
+  getAllPokemons,
+  getSinglePokemon,
+  getPokeInfo
+};
