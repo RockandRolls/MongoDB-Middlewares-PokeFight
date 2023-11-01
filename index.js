@@ -12,7 +12,10 @@ app.use(cors());
 console.log(process.env);
 // to see in terminal all the credentials added in env file
 
-// let jsonData = require(‘./data.json’)
+let jsonData = require(‘./data.json’);
+// And we also enable the body to be interpreted as urlencoded content
+// This is important for step 7 and the view engine, since html forms send data as x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => res.send("Welcome to the PokeFight API"));
 
@@ -21,3 +24,4 @@ app.route("/pokemon/:id").get(getSingleCard);
 // app.route("/pokemon/:id/:info").get(getSingleCard);
 
 app.listen(port, () => console.log("Welcome"));
+
