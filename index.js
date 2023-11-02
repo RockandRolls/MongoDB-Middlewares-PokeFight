@@ -3,7 +3,12 @@
 const express = require("express");
 const app = express();
 // const dbPool = require("./db/pgClient");
-const { getAllPokemons, getSinglePokemon, getPokeInfo } = require("./controllers/cardControllers");
+const {
+    getAllPokemons,
+    getSinglePokemon,
+    // getPokemonById,
+    getPokeInfo,
+} = require("./controllers/cardControllers");
 const cors = require("cors");
 
 const port = process.env.PORT || 7000;
@@ -19,11 +24,15 @@ app.use(express.json());
 // This is important for step 6(singleCard) and the view engine, since html forms send data as x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => res.send('<p>Welcome to the PokeFight API! Go to <a href="/pokemon">/pokemon</a> to see cool things happening</p>'));
+app.get("/", (req, res) =>
+    res.send(
+        '<p>Welcome to the PokeFight API! Go to <a href="/pokemon">/pokemon</a> to see cool things happening</p>'
+    )
+);
 
 app.route("/pokemon").get(getAllPokemons);
 app.route("/pokemon/:pokeName").get(getSinglePokemon);
+// app.route("/pokemon/withid/:id").get(getPokemonById);
 app.route("/pokemon/:pokeName/:info").get(getPokeInfo);
 
 app.listen(port, () => console.log(`Welcome ${port}`));
-
