@@ -6,7 +6,7 @@ const app = express();
 const {
     getAllPokemons,
     getSinglePokemon,
-    // getPokemonById,
+    getPokemonById,
     getPokeInfo,
 } = require("./controllers/cardControllers");
 const cors = require("cors");
@@ -32,7 +32,7 @@ app.get("/", (req, res) =>
 
 app.route("/pokemon").get(getAllPokemons);
 app.route("/pokemon/:pokeName").get(getSinglePokemon);
-// app.route("/pokemon/withid/:id").get(getPokemonById);
+app.route("/pokemon/withid/:id").get(getPokemonById);
 app.route("/pokemon/:pokeName/:info").get(getPokeInfo);
 
 app.listen(port, () => console.log(`Welcome ${port}`));

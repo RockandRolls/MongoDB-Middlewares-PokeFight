@@ -44,24 +44,21 @@ const getSinglePokemon = (req, res) => {
     }
 };
 
-//used an easier method, keeping this for reference
-// const getPokemonById = (req, res) => {
-//     try {
-//         const { id } = req.params;
-//         //    single object in array=pokemon= alll details-name, type, base
-//         console.log(jsonData[0].id);
-//         //id from params is string, so can't use strict equality without converting it, should probably be done at some point, but this works for now
-//         const findPokemon = jsonData.find((pokemon) => id == pokemon.id);
-//         //   pokeName is in URL= charmander
-//         // whatever user types, just make it lowercase //
-//         if (!findPokemon) throw new Error("Pokemon not found.");
-//         findPokemon.sprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+// for getting enemy pokemon-easier to use id
+const getPokemonById = (req, res) => {
+    try {
+        const { id } = req.params;
 
-//         return res.json(findPokemon);
-//     } catch (error) {
-//         return res.status(500).json({ error: error.message });
-//     }
-// };
+        //id from params is string, so can't use strict equality without converting it, should probably be done at some point, but this works for now
+        const findPokemon = dataWithSprites.find((pokemon) => id == pokemon.id);
+
+        if (!findPokemon) throw new Error("Pokemon not found.");
+
+        return res.json(findPokemon);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
 
 const getPokeInfo = (req, res) => {
     try {
@@ -88,6 +85,6 @@ const getPokeInfo = (req, res) => {
 module.exports = {
     getAllPokemons,
     getSinglePokemon,
-    // getPokemonById,
+    getPokemonById,
     getPokeInfo,
 };
