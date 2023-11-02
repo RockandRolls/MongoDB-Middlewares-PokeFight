@@ -19,7 +19,7 @@ app.use(express.json());
 // This is important for step 6(singleCard) and the view engine, since html forms send data as x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => res.send('<p>Welcome to the PokeFight API! Go to <a href="/api/pokemon">/api/pokemon</a> to see cool things happening</p>'));
+app.get("/", (req, res) => res.send('<p>Welcome to the PokeFight API! Go to <a href="/pokemon">/pokemon</a> to see cool things happening</p>'));
 
 app.route("/pokemon").get(getAllPokemons);
 app.route("/pokemon/:pokeName").get(getSinglePokemon);
