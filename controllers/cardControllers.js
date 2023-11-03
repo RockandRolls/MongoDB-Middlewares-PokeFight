@@ -29,7 +29,7 @@ const getAllPokemons = (req, res) => {
 const getSinglePokemon = (req, res) => {
     try {
         const { pokeName } = req.params;
-        //    single object in array=pokemon= alll details-name, type, base
+        //    single object in array=pokemon= all details-name, type, base
         const findPokemon = dataWithSprites.find(
             (pokemon) =>
                 pokeName.toLowerCase() === pokemon.name.english.toLowerCase()
