@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import chalkLog from "../lib/chalkColors.mjs";
+import chalkLog from "../lib/chalkColors.js";
 
 try {
     const client = await mongoose.connect(process.env.MONGO_URI);
