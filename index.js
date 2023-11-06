@@ -4,12 +4,7 @@ const express = require("express");
 const pokemonRouter = require("./routes/pokemonRoutes.js");
 const app = express();
 // const dbPool = require("./db/pgClient");
-const {
-    getAllPokemons,
-    getSinglePokemon,
-    getPokemonById,
-    getPokeInfo,
-} = require("./controllers/cardControllers");
+
 const cors = require("cors");
 
 const port = process.env.PORT || 7000;
