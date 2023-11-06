@@ -1,4 +1,6 @@
-const { Schema, model } = require("mongoose");
+import { Schema, model } from "mongoose";
+import { application } from "express";
+
 
 const userSchema = new Schema(
     {
@@ -20,6 +22,16 @@ const userSchema = new Schema(
                 "must contain only letters and up to 20 characters",
             ],
         },
+        userName: {
+            type: String,
+            required: true,
+            unique: true,
+            maxlength: 20,
+            match: [
+                /^[a-zA-Z-\s]+$/,
+                "must contain only letters and up to 20 characters",
+            ],
+        },
         email: {
             type: String,
             required: true,
@@ -32,16 +44,19 @@ const userSchema = new Schema(
         password: {
             type: String,
             required: true,
-            match: [
-                /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,20}$/,
-                "must contain at least one uppercase letter, one lowercase letter, one number and be between 8 and 20 characters long",
-            ],
         },
-        active: {
-            type: Boolean,
-            default: true,
+        
+battlesWon: {
+            type: Number,
+            
+        },
+
+       battlesLost: {
+            type: Number,
+            
         },
     },
+
     {
         timestamps: true,
     }

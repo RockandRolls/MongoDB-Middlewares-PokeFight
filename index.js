@@ -1,19 +1,17 @@
-// require('dotenv').config(); u can write it here or in package.json (scripts),
-//  to add env file functionality. normally vite does it automatically in frontend
-const express = require("express");
-const pokemonRouter = require("./routes/pokemonRoutes.js");
+import express from "express";
+import "./db/mongooseClient.js";
+import errorHandler from './middlewares/errorHandler.js';
+import pokemonRouter from "./routes/pokemonRoutes.js";
+// import userRouter from "./routes/userRoutes.js"; //bring back when userRoutes are up to date
+
+import cors  from "cors";
+
+
 const app = express();
-// const dbPool = require("./db/pgClient");
-
-const cors = require("cors");
-
 const port = process.env.PORT || 7000;
 app.use(cors());
 
-// console.log(process.env);
-// to see in terminal all the credentials added in env file
 
-// let jsonData = require(‘./data.json’);
 app.use(express.json());
 // We enable data to be interpreted as JSON
 // And we also enable the body to be interpreted as urlencoded content
@@ -27,9 +25,9 @@ app.get("/", (req, res) =>
 );
 
 app.use("/pokemon", pokemonRouter);
-// app.route("/pokemon").get(getAllPokemons);
-// app.route("/pokemon/:pokeName").get(getSinglePokemon);
-// app.route("/pokemon/withid/:id").get(getPokemonById);
-// app.route("/pokemon/:pokeName/:info").get(getPokeInfo);
+
+// app.use("/users", userRouter);
+
+app.use(errorHandler);
 
 app.listen(port, () => console.log(`Welcome ${port}`));

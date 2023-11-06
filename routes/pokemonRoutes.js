@@ -1,10 +1,10 @@
-const express = require("express");
-const {
+import express from "express";
+import {
     getAllPokemons,
     getSinglePokemon,
     getPokemonById,
     getPokeInfo,
-} = require("../controllers/cardControllers");
+} from "../controllers/cardControllers.cjs";
 
 const pokemonRouter = express.Router();
 
@@ -13,4 +13,4 @@ pokemonRouter.route("/:pokeName").get(getSinglePokemon);
 pokemonRouter.route("/withid/:id").get(getPokemonById);
 pokemonRouter.route("/:pokeName/:info").get(getPokeInfo);
 
-module.exports = pokemonRouter;
+export default pokemonRouter;
