@@ -4,7 +4,7 @@ import UserModel from "../models/userModel.js";
 
 const allUsers = async (req, res, next) => {
     try {
-        const getUsers = await UserModel.find();
+        const getUsers = await UserModel.find().sort("-battlesWon");
         return res.json(getUsers);
     } catch (error) {
         next(error);
