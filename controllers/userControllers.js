@@ -11,6 +11,22 @@ const allUsers = async (req, res, next) => {
     }
 };
 
+const singleUser = async (req, res, next) => {
+    const { username } = req.params;
+    const { password } = req.body;
+    try {
+        const getUser = await UserModel.findOne({ username });
+        console.log(getUser);
+        //for now doesn't use password, when I refactor for auth it will
+        // if (password !== getUser.password) {
+        //     throw new ErrorStatus("Invalid username or password", 400);
+        // }
+        return res.json(getUser);
+    } catch (error) {
+        next(error);
+    }
+};
+
 const createUser = async (req, res, next) => {
     try {
         const { firstName, lastName, email, username, password } = req.body;
@@ -59,4 +75,4 @@ const editBattles = async (req, res, next) => {
     }
 };
 
-export { allUsers, createUser, editBattles };
+export { allUsers, singleUser, createUser, editBattles };
