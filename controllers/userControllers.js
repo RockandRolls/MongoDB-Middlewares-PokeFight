@@ -1,61 +1,62 @@
-import ErrorStatus from '../utils/errorStatus.js';
-import chalkLog from '../lib/chalkColors.js';
-import UserModel from '../models/userModel.js';
+import ErrorStatus from "../utils/errorStatus.js";
+import chalkLog from "../lib/chalkColors.js";
+import UserModel from "../models/userModel.js";
 
 const allUsers = async (req, res, next) => {
-  try {
-    const getUsers = await UserModel.find();
-    return res.json(getUsers);
-  } catch (error) {
-    next(error);
-  }
+    try {
+        const getUsers = await UserModel.find();
+        return res.json(getUsers);
+    } catch (error) {
+        next(error);
+    }
 };
 
 const createUser = async (req, res, next) => {
-  try {
-    const { last_name, first_name, email } = req.body;
-    if (!last_name || !first_name || !email)
-      throw new ErrorStatus('Missing required fields', 400);
+    try {
+        const { firstName, lastName, email, username, password } = req.body;
+        if (!firstName || !lastName || !email || !username || !password)
+            throw new ErrorStatus("Missing required fields", 400);
 
-    // const createUser = new UserModel({ last_name, first_name, email });
-    // const newUser = await createUser.save();
+        const newUser = await UserModel.create({
+            firstName,
+            lastName,
+            email,
+            username,
+            password,
+        });
 
-    const newUser = await UserModel.create({
-      last_name,
-      first_name,
-      email,
-    });
-
-    return res.status(201).json(newUser);
-  } catch (error) {
-    next(error);
-  }
+        return res.status(201).json(newUser);
+    } catch (error) {
+        next(error);
+    }
 };
 
-const editUsers = async (req, res, next) => {
-  try {
-    // const updateUser = await UserModel.findOneAndUpdate(
-    //   { first_name: 'John' },
-    //   { $set: { first_name: 'Bob' } },
-    //   { runValidators: true, new: true }
-    // );
+const editBattles = async (req, res, next) => {
+    try {
+        const { username, wonBattle } = req.body;
+        if (!username || wonBattle === undefined)
+            throw new ErrorStatus("Please send all required fields", 400);
 
-    // return res.json(updateUser);
+        if (!wonBattle) {
+            const battleLost = await UserModel.findOneAndUpdate(
+                { username },
+                { $inc: { battlesLost: 1 } },
+                { runValidators: true, new: true }
+            );
 
-    const { last_name, first_name, email } = req.body;
-    if (!email || !last_name || !first_name)
-      throw new ErrorStatus('Please send all required fields', 400);
+            return res.json(battleLost);
+        } else if (wonBattle) {
+            const battleWon = await UserModel.findOneAndUpdate(
+                { username },
+                { $inc: { battlesWon: 1 } },
+                { runValidators: true, new: true }
+            );
 
-    const updateUser = await UserModel.findOneAndUpdate(
-      { email },
-      { last_name, first_name },
-      { runValidators: true, new: true }
-    );
-
-    return res.json(updateUser);
-  } catch (error) {
-    next(error);
-  }
+            return res.json(battleWon);
+        }
+    } catch (error) {
+        next(error);
+    }
 };
 
-export { allUsers, createUser, editUsers };
+export { allUsers, createUser, editBattles };

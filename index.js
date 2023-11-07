@@ -1,22 +1,16 @@
 import express from "express";
 import "./db/mongooseClient.js";
-import errorHandler from './middlewares/errorHandler.js';
+import errorHandler from "./middlewares/errorHandler.js";
 import pokemonRouter from "./routes/pokemonRoutes.js";
-// import userRouter from "./routes/userRoutes.js"; //bring back when userRoutes are up to date
+import userRouter from "./routes/userRoutes.js"; //bring back when userRoutes are up to date
 
-import cors  from "cors";
-
+import cors from "cors";
 
 const app = express();
 const port = process.env.PORT || 7000;
 app.use(cors());
 
-
 app.use(express.json());
-// We enable data to be interpreted as JSON
-// And we also enable the body to be interpreted as urlencoded content
-// This is important for step 6(singleCard) and the view engine, since html forms send data as x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) =>
     res.send(
@@ -26,7 +20,7 @@ app.get("/", (req, res) =>
 
 app.use("/pokemon", pokemonRouter);
 
-// app.use("/users", userRouter);
+app.use("/users", userRouter);
 
 app.use(errorHandler);
 
