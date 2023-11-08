@@ -1,7 +1,6 @@
 import { Schema, model } from "mongoose";
 import { application } from "express";
 
-
 const userSchema = new Schema(
     {
         firstName: {
@@ -22,16 +21,6 @@ const userSchema = new Schema(
                 "must contain only letters and up to 20 characters",
             ],
         },
-        userName: {
-            type: String,
-            required: true,
-            unique: true,
-            maxlength: 20,
-            match: [
-                /^[a-zA-Z-\s]+$/,
-                "must contain only letters and up to 20 characters",
-            ],
-        },
         email: {
             type: String,
             required: true,
@@ -41,19 +30,30 @@ const userSchema = new Schema(
                 "is not a valid email",
             ],
         },
+        username: {
+            type: String,
+            required: true,
+            unique: true,
+            maxlength: 20,
+            match: [
+                /^[a-zA-Z-\s]+$/,
+                "must contain only letters and up to 20 characters",
+            ],
+        },
         password: {
             type: String,
             required: true,
-        },
-        
-battlesWon: {
-            type: Number,
-            
+            //  select: false,
         },
 
-       battlesLost: {
+        battlesWon: {
             type: Number,
-            
+            default: 0,
+        },
+
+        battlesLost: {
+            type: Number,
+            default: 0,
         },
     },
 
