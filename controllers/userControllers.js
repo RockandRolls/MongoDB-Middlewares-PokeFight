@@ -2,6 +2,7 @@ import ErrorStatus from "../utils/errorStatus.js";
 import chalkLog from "../lib/chalkColors.js";
 import UserModel from "../models/userModel.js";
 
+//keep for leaderboard
 const allUsers = async (req, res, next) => {
     try {
         const getUsers = await UserModel.find().sort("-battlesWon");
@@ -11,6 +12,7 @@ const allUsers = async (req, res, next) => {
     }
 };
 
+//everything below this line will be deprecated with auth routes
 const singleUser = async (req, res, next) => {
     const { username } = req.params;
     const { password } = req.body;

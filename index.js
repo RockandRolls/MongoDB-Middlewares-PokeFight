@@ -1,10 +1,10 @@
 import express from "express";
-import "./db/mongooseClient.js";
-import errorHandler from "./middlewares/errorHandler.js";
-import pokemonRouter from "./routes/pokemonRoutes.js";
-import userRouter from "./routes/userRoutes.js"; //bring back when userRoutes are up to date
-
 import cors from "cors";
+import "./db/mongooseClient.js";
+import pokemonRouter from "./routes/pokemonRoutes.js";
+import userRouter from "./routes/userRoutes.js";
+import authRouter from "./routes/authRoutes.js";
+import errorHandler from "./middlewares/errorHandler.js";
 
 const app = express();
 const port = process.env.PORT || 7000;
@@ -25,6 +25,8 @@ app.get("/", (req, res) =>
 app.use("/pokemon", pokemonRouter);
 
 app.use("/users", userRouter);
+
+app.use("/auth", authRouter);
 
 app.use(errorHandler);
 
