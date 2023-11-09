@@ -30,8 +30,7 @@ const getSinglePokemon = (req, res) => {
     try {
         const { pokeName } = req.params;
         //    single object in array=pokemon= all details-name, type, base
-        const findPokemon = dataWithSprites.find(
-            (pokemon) =>
+        const findPokemon = dataWithSprites.find((pokemon) =>
                 pokeName.toLowerCase() === pokemon.name.english.toLowerCase()
         );
         //   pokeName is in URL= charmander
