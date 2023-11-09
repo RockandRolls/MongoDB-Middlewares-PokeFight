@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node -r dotenv/config index.js dotenv_config_path=./.env.local",
+    // "start": "node -r dotenv/config index.js dotenv_config_path=./.env.local",
+    "start": "node index.js",
     "dev": "nodemon -r dotenv/config index.js dotenv_config_path=./.env.local"
   },
   "keywords": [],
