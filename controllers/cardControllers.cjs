@@ -1,5 +1,5 @@
 // const dbPool = require("../db/pgClient"); if we r connected to a database
-let jsonData = require("../data.json");
+const jsonData = require("../data.json");
 /**
  * Controller to serve all ducks in the database.
  * @route `/pokemon`
