@@ -8,11 +8,7 @@ import errorHandler from "./middlewares/errorHandler.js";
 
 const app = express();
 const port = process.env.PORT || 7000;
-app.use(
-    cors({
-        origin: "*",
-    })
-);
+app.use(cors({ exposedHeaders: "Authorization" }));
 
 app.use(express.json());
 
